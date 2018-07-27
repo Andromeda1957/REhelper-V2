@@ -64,7 +64,7 @@ int main(int argc, char **argv){
     int value;
 
     if(argc == 2){
-       pickOne::options(argv[1]);
+        pickOne::options(argv[1]);
     }else if(argc == 3){
         pickTwo::options(argv[1], argv[2]);
     }else if(argc == 4){
