@@ -13,4 +13,5 @@ g++ -I headers/ -fPIC -shared src/options.cpp -o liboptions.so <br />
 g++ -I headers/ -L. -ldefaults -lpick1 -lpick2 -lpick3 -loptions -lcrypto REhelper.cpp -o REhelper
 
 ## Install
+export LD_LIBRARY_PATH=\<dir of REhelper.cpp\> <br />
 bash install.sh
