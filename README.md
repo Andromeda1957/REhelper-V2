@@ -2,7 +2,7 @@
 REhelper rewritten in C++
 
 ## Compile
-export LD_LIBRARY_PATH=<dir of REhelper.cpp>
+export LD_LIBRARY_PATH=\<dir of REhelper.cpp\>
 g++ -I headers/ -fPIC -shared src/defaults.cpp -o libdefaults.so
 g++ -I headers/ -fPIC -shared src/pickone.cpp -o libpick1.so
 g++ -I headers/ -fPIC -shared src/picktwo.cpp -o libpick2.so 
