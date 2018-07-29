@@ -1,12 +1,15 @@
 // Copyright 2018 <Andromeda>
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <../headers/defaults.h>
 
-defaults::defaults(){}
+defaults::defaults() {}
 
-void defaults::usage(){
+// Public methods
+
+void defaults::usage() {
     puts("REhelper created by Andromeda");
     puts("Usage <option> <string> <number>\n");
     puts("General options:");

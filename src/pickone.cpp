@@ -1,4 +1,5 @@
 // Copyright 2018 <Andromeda>
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,29 +10,39 @@
 #include <../headers/defaults.h>
 #include <../headers/pickone.h>
 
-pickOne::pickOne(){}
+#include <vector>
+
+
+pickOne::pickOne() {}
+
+// Private methods
 
 void pickOne::sig_handler(int signo) {
     exit(0);
 }
+
+// Private static methods
 
 void pickOne::detect() {
     if (ptrace(PTRACE_TRACEME, 0, NULL, NULL) == -1) {
         puts("Debugger detected!");
         exit(0);
     } else {
-        return;
+        exit(0);
     }
- }
+}
+
+// Public static methods
 
 void pickOne::breakpoint() {
     printf("Breakpoint hit at: %p\n", breakpoint);
     __asm__("int $3");
 }
 
+// Public methods
 
 void pickOne::ascii_table() {
-    char *output = new char[defaults::max];
+    std::vector<char> output(defaults::max);
 
     for (int i = 0x20; i <= 0x7f; i++) {
         output[0] = i;
@@ -39,8 +50,6 @@ void pickOne::ascii_table() {
         printf("Ascii value: %c\n", output[0]);
         puts("");
     }
-
-    delete output;
 }
 
 void pickOne::aslr() {
@@ -72,11 +81,10 @@ void pickOne::version() {
 }
 
 void pickOne::trace() {
-    if (ptrace(PTRACE_TRACEME, 0, NULL, NULL) == -1) {
+    if (ptrace(PTRACE_TRACEME, 0, NULL, NULL) == -1)
         puts("Debugger detected!");
-    } else {
+    else
         puts("No debugger detected");
-    }
 }
 
 void pickOne::background() {

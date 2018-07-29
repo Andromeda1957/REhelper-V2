@@ -1,4 +1,5 @@
 // Copyright 2018 <Andromeda>
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,74 +12,68 @@
 #include <../headers/defaults.h>
 #include <../headers/picktwo.h>
 
-pickTwo::pickTwo(){}
+pickTwo::pickTwo() {}
 
-char proc[defaults::max] = "/proc/";
+// Private methods
 
 int pickTwo::length_decode(char *user_input) {
     int equals;
-    int length = strnlen(user_input, defaults::max);
+    const int length = strnlen(user_input, defaults::max);
 
-    if (user_input[length - 1] == '=' && user_input[length - 2] == '=') {
+    if (user_input[length - 1] == '=' && user_input[length - 2] == '=')
         equals = 2;
-    } else if (user_input[length - 1] == '=') {
+    else if (user_input[length - 1] == '=')
         equals = 1;
-    } else {
+    else
         equals = 0;
-    }
 
     return (length * 3) / 4 - equals;
 }
- 
-void pickTwo::print_file(char *proc) {
-    int size = 6400;
-    char *filecontent;
-    FILE *file;
 
-    file = fopen(proc, "r");
+void pickTwo::print_file(char *proc) {
+    constexpr int size = 6400;
+    char *filecontent = new char[size];
+    FILE *file = fopen(proc, "r");
 
     if (!file) {
         puts("No such process");
         return;
     }
-    
-    filecontent = new char[size];
+
     fread(filecontent, 1, size, file);
     filecontent[size] = '\0';
 
     if (filecontent[size] == 0x00) {
         puts(filecontent);
-        delete filecontent;
+        delete[] filecontent;
     } else {
-        delete filecontent;
+        delete[] filecontent;
         exit(0);
     }
 }
- 
+
+// Public methods
+
 void pickTwo::reverse(char *user_input) {
-    int length = strnlen(user_input, defaults::max) - 1;
+    const int length = strnlen(user_input, defaults::max) - 1;
     char *output = new char[defaults::max];
 
-    for (int i = 0; i <= length; i++) {
+    for (int i = 0; i <= length; i++)
         output[i] = user_input[length - i];
-    }
-    
-    puts(output);
-    delete output;
-}
- 
-void pickTwo::magic(char *user_input) {
-    char *filecontent;
-    FILE *file;
 
-    file = fopen(user_input, "rb");
+    puts(output);
+    delete[] output;
+}
+
+void pickTwo::magic(char *user_input) {
+    FILE *file = fopen(user_input, "rb");
+    char *filecontent = new char[sizeof(file)];
 
     if (!file) {
         puts("File not found");
         return;
     }
 
-    filecontent = new char[sizeof(file)];
     fscanf(file, "%s", filecontent);
 
     if (filecontent[0] != 0x7f) {
@@ -97,12 +92,11 @@ void pickTwo::magic(char *user_input) {
 
     printf("ELF magic: ");
 
-    for (int i = 0; i <= 6; i++) {
+    for (int i = 0; i <= 6; i++)
         printf("%02x ", filecontent[i]);
-    }
 
     puts("");
-    delete filecontent;
+    delete[] filecontent;
 }
 
 void pickTwo::dump_stack(char *user_input) {
@@ -138,14 +132,12 @@ void pickTwo::dump_limits(char *user_input) {
 void pickTwo::dump_clone(char *user_input) {
     int outfile;
     char *filecontent;
-    FILE *file;
-    FILE *cloned;
-    FILE *out;
+    FILE *file = fopen(proc, "r");
+    FILE *cloned = fopen("cloned", "r");
+    FILE *out = fopen("cloned", "w");
+
     strncat(proc, user_input, defaults::max - strnlen(proc, defaults::max));
     strncat(proc, "/exe", defaults::max - strnlen(proc, defaults::max));
-    file = fopen(proc, "r");
-    cloned = fopen("cloned", "r");
-    out = fopen("cloned", "w");
 
     if (!file) {
         puts("No such process");
@@ -175,11 +167,10 @@ void pickTwo::dump_clone(char *user_input) {
 
 void pickTwo::add(char *user_input) {
     int total = 0;
-    int length = strnlen(user_input, defaults::max) - 1;
+    const int length = strnlen(user_input, defaults::max) - 1;
 
-    for (int i = 0; i <= length; i++) {
+    for (int i = 0; i <= length; i++)
         total = total + user_input[i];
-    }
 
     printf("Decimal value: %d", total);
     puts("");
@@ -189,11 +180,10 @@ void pickTwo::add(char *user_input) {
 
 void pickTwo::mult(char *user_input) {
     int total = 1;
-    int length = strnlen(user_input, defaults::max) - 1;
+    const int length = strnlen(user_input, defaults::max) - 1;
 
-    for (int i = 0; i <= length; i++) {
+    for (int i = 0; i <= length; i++)
         total = total * user_input[i];
-    }
 
     printf("Decimal value: %d", total);
     puts("");
@@ -203,18 +193,18 @@ void pickTwo::mult(char *user_input) {
 
 void pickTwo::xors(char *user_input) {
     int xors;
-    int length = strnlen(user_input, defaults::max);
+    const int length = strnlen(user_input, defaults::max);
     char *xored = new char[length];
 
     xored[length + 1] = '\0';
 
     for (int i = 0; i <= 256; i++) {
-        printf("Hex value %d: ", i);
+        printf("Hex value %d: 0x", i);
 
         for (int e = 0; e <= length - 1; e++) {
             xors = user_input[e] ^ i;
             xored[e] = xors;
-            printf("0x%x", xored[e]);
+            printf("%x", xored[e]);
         }
 
         puts("");
@@ -222,15 +212,13 @@ void pickTwo::xors(char *user_input) {
         puts(xored);
     }
 
-    delete xored;
+    delete[] xored;
 }
 
 void pickTwo::base64encode(char *user_input) {
-    BIO *base64;
-    BIO *input;
+    BIO *base64 = BIO_new(BIO_f_base64());
+    BIO *input = BIO_new_fp(stdout, BIO_NOCLOSE);
 
-    base64 = BIO_new(BIO_f_base64());
-    input = BIO_new_fp(stdout, BIO_NOCLOSE);
     BIO_push(base64, input);
     BIO_write(base64, user_input, strnlen(user_input, defaults::max));
     BIO_flush(base64);
@@ -239,26 +227,29 @@ void pickTwo::base64encode(char *user_input) {
 
 void pickTwo::base64decode(char *user_input) {
     int length;
-    int decode_length = length_decode(user_input);
-    char *output;
-    BIO *base64;
-    BIO *input;
+    const int decode_length = length_decode(user_input);
+    char *output = new char[decode_length + 1];
+    BIO *base64 = BIO_new(BIO_f_base64());
+    BIO *input = BIO_new_mem_buf(user_input, -1);
 
-    output = new char[decode_length + 1];
     output[decode_length] = '\0';
-    input = BIO_new_mem_buf(user_input, -1);
-    base64 = BIO_new(BIO_f_base64());
     input = BIO_push(base64, input);
     BIO_set_flags(input, BIO_FLAGS_BASE64_NO_NL);
     length = BIO_read(input, output, strnlen(user_input, defaults::max));
+
+    if (length != decode_length) {
+        puts("not base64");
+        exit(0);
+    }
+
     assert(length == decode_length);
     BIO_free_all(input);
     puts(output);
-    delete output;
+    delete[] output;
 }
 
 void pickTwo::getmd5(char *user_input) {
-    int length = strnlen(user_input, defaults::max);
+    const int length = strnlen(user_input, defaults::max);
     unsigned char hash[MD5_DIGEST_LENGTH];
     MD5_CTX ctx;
 
@@ -267,14 +258,13 @@ void pickTwo::getmd5(char *user_input) {
     MD5_Final(hash, &ctx);
     puts("");
 
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 16; i++)
         printf("%02x", (unsigned int)hash[i]);
-    }
 
     puts("");
 }
 void pickTwo::getsha1(char *user_input) {
-    int length = strnlen(user_input, defaults::max);
+    const int length = strnlen(user_input, defaults::max);
     unsigned char hash[SHA_DIGEST_LENGTH];
     SHA_CTX ctx;
 
@@ -283,15 +273,14 @@ void pickTwo::getsha1(char *user_input) {
     SHA1_Final(hash, &ctx);
     puts("");
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 20; i++)
         printf("%02x", (unsigned int)hash[i]);
-    }
 
     puts("");;
 }
 
 void pickTwo::getsha256(char *user_input) {
-    int length = strnlen(user_input, defaults::max);
+    const int length = strnlen(user_input, defaults::max);
     unsigned char hash[SHA256_DIGEST_LENGTH];
     SHA256_CTX ctx;
 
@@ -300,15 +289,14 @@ void pickTwo::getsha256(char *user_input) {
     SHA256_Final(hash, &ctx);
     puts("");
 
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 32; i++)
         printf("%02x", (unsigned int)hash[i]);
-    }
 
     puts("");
 }
 
 void pickTwo::getsha384(char *user_input) {
-    int length = strnlen(user_input, defaults::max);
+    const int length = strnlen(user_input, defaults::max);
     unsigned char hash[SHA384_DIGEST_LENGTH];
     SHA512_CTX ctx;
 
@@ -317,15 +305,14 @@ void pickTwo::getsha384(char *user_input) {
     SHA384_Final(hash, &ctx);
     puts("");
 
-    for (int i = 0; i < 48; i++) {
+    for (int i = 0; i < 48; i++)
         printf("%02x", (unsigned int)hash[i]);
-    }
 
     puts("");
 }
 
 void pickTwo::getsha512(char *user_input) {
-    int length = strnlen(user_input, defaults::max);
+    const int length = strnlen(user_input, defaults::max);
     unsigned char hash[SHA512_DIGEST_LENGTH];
     SHA512_CTX ctx;
 
@@ -334,9 +321,8 @@ void pickTwo::getsha512(char *user_input) {
     SHA512_Final(hash, &ctx);
     puts("");
 
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < 64; i++)
         printf("%02x", (unsigned int)hash[i]);
-    }
 
     puts("");
 }

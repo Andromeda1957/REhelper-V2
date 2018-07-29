@@ -1,4 +1,5 @@
 // Copyright 2018 <Andromeda>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,7 +7,11 @@
 #include <../headers/defaults.h>
 #include <../headers/pickthree.h>
 
-pickThree::pickThree(){}
+#include <vector>
+
+pickThree::pickThree() {}
+
+// Public methods
 
 void pickThree::pattern(char *user_input, int value) {
     for (int i = 0; i < value; i++) {
@@ -17,7 +22,7 @@ void pickThree::pattern(char *user_input, int value) {
 }
 
 void pickThree::sub(char *user_input, int value) {
-    int length = strnlen(user_input, defaults::max) - 1;
+    const int length = strnlen(user_input, defaults::max) - 1;
 
     for (int i = 0; i <= length; i++) {
         value = value - user_input[i];
@@ -30,13 +35,13 @@ void pickThree::sub(char *user_input, int value) {
 }
 
 void pickThree::shift(char *user_input, int shift) {
-    int length = strnlen(user_input, defaults::max) - 1;
-    char *rightshifted = new char[defaults::max];
-    char *leftshifted = new char[defaults::max];
+    const int length = strnlen(user_input, defaults::max) - 1;
+    std::vector<char> rightshifted(defaults::max);
+    std::vector<char> leftshifted(defaults::max);
 
     leftshifted[length + 1] = '\0';
     rightshifted[length + 1] = '\0';
-    printf("Shifted right: ");
+    printf("Shifted right: 0x");
 
     for (int i = 0; i <= length; i++) {
         rightshifted[i] = user_input[i] >> shift;
@@ -44,7 +49,7 @@ void pickThree::shift(char *user_input, int shift) {
     }
 
     puts("");
-    printf("Shifted left:  ");
+    printf("Shifted left:  0x");
 
     for (int e = 0; e <= length; e++) {
         leftshifted[e] = user_input[e] << shift;
@@ -52,24 +57,21 @@ void pickThree::shift(char *user_input, int shift) {
     }
 
     puts("");
-    delete rightshifted;
-    delete leftshifted;
 }
 
 void pickThree::xoring(char *user_input, int xors) {
-    int length = strnlen(user_input, defaults::max) - 1;
-    char *xored = new char[defaults::max];
+    const int length = strnlen(user_input, defaults::max) - 1;
+    std::vector<char> xored(defaults::max);
 
-    printf("Hex value: ");
+    printf("Hex value: 0x");
 
     for (int i = 0; i <= length; i++) {
         xored[i] = user_input[i] ^ xors;
-        printf("0x%x", xored[i]);
+        printf("%x", xored[i]);
     }
 
     xored[length + 1] = '\0';
     puts("");
     printf("String:    ");
-    puts(xored);
-    delete xored;
+    printf("%s\n", xored);
 }
