@@ -1,4 +1,5 @@
 // Copyright 2018 <Andromeda>
+
 #ifndef CODE___REHELP_HEADERS_DEFAULTS_H_
 #define CODE___REHELP_HEADERS_DEFAULTS_H_
 
