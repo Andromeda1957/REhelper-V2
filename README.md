@@ -15,9 +15,3 @@ Either compile manually or use the install script.
 __bash install.sh__ <br />
       __OR__        <br />
 __chmod +x install.sh && ./install.sh__ 
-
-
-
-## Usage
-┌─[root@parrot]─[/home/user] <br />
-└──╼ #REhelper 
