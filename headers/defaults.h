@@ -3,10 +3,9 @@
 #ifndef CODE___REHELP_HEADERS_DEFAULTS_H_
 #define CODE___REHELP_HEADERS_DEFAULTS_H_
 
-class defaults{
- public:
+struct defaults{
     defaults();
-    static const int max = 0xff;
+    static constexpr int max = 0xff;
     static void usage();
 };
 

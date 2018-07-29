@@ -4,10 +4,12 @@
 #define CODE___REHELP_HEADERS_PICKTWO_H_
 
 class pickTwo {
+    char proc[defaults::max] = "/proc/";
+    int length_decode(char *user_input);
+    void print_file(char *proc);
+
  public:
     pickTwo();
-    static int length_decode(char *user_input);
-    static void print_file(char *proc);
 
  public:
     void reverse(char *user_input);

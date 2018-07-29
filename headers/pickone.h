@@ -1,10 +1,13 @@
 // Copyright 2018 <Andromeda>
+
 #ifndef CODE___REHELP_HEADERS_PICKONE_H_
 #define CODE___REHELP_HEADERS_PICKONE_H_
 
 class pickOne {
     static void sig_handler(int signo);
-    static void detect();
+
+ private:
+    void detect();
 
  public:
     pickOne();

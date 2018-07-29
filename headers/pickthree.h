@@ -3,8 +3,7 @@
 #ifndef CODE___REHELP_HEADERS_PICKTHREE_H_
 #define CODE___REHELP_HEADERS_PICKTHREE_H_
 
-class pickThree {
- public:
+struct pickThree {
     pickThree();
     void pattern(char *user_input, int value);
     void sub(char *user_input, int value);
