@@ -1,6 +1,9 @@
 #!/bin/bash
 
-echo "Must be ran as root"
+if [[ $EUID -ne 0 ]]; then
+   echo "Must be run as root" 
+   exit 1
+fi
 
 g++ -I headers/ -fPIC -shared src/defaults.cpp -o libdefaults.so
 mv libdefaults.so /lib
