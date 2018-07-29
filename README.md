@@ -6,8 +6,8 @@ Either compile manually or use the install script.
 ## Install
 __bash install.sh__ <br />
       __OR__        <br />
-__chmod +x install.sh__ <br />
-__./install.sh__
+__chmod +x install.sh && ./install.sh__ 
+
 
 
 ## Usage
