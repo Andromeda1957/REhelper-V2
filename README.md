@@ -1,4 +1,4 @@
-# REhelperp-V2
+# REhelper-V2
 REhelper rewritten in C++
 
 This tool is designed to help with doing reverse engineering tasks. <br />
