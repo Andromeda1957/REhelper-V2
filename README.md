@@ -8,5 +8,5 @@ export LD_LIBRARY_PATH=\<dir of REhelper.cpp\> <br />
 bash install.sh
 
 ## Usage
-┌─[root@parrot]─[/home/h4ck3r] <br />
+┌─[root@parrot]─[/home/user] <br />
 └──╼ #REhelper 
