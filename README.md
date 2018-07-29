@@ -1,7 +1,7 @@
 # REhelperp-V2
 REhelper rewritten in C++
 
-Either compile manually or use the install script. <br .>
+Either compile manually or use the install script.
 
 ## Compile
 export LD_LIBRARY_PATH=\<dir of REhelper.cpp\> <br />
