@@ -3,12 +3,11 @@
 #ifndef CODE___REHELP_HEADERS_OPTIONS_H_
 #define CODE___REHELP_HEADERS_OPTIONS_H_
 
-struct REhelp : public defaults, public pickOne,
-public pickTwo, public pickThree {
+struct REhelp : public defaults {
     REhelp();
-    void pick1(char *option);
-    void pick2(char *option, char *input);
-    void pick3(char *option, char *input, char *value_str);
+    void pick1(const char *option);
+    void pick2(const char *option, const char *input);
+    void pick3(const char *option, const char *input, const char *value_str);
 };
 
 #endif  // CODE___REHELP_HEADERS_OPTIONS_H_

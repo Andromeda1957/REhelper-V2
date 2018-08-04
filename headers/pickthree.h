@@ -5,10 +5,10 @@
 
 struct pickThree {
     pickThree();
-    void pattern(char *user_input, int value);
-    void sub(char *user_input, int value);
-    void shift(char *user_input, int shift);
-    void xoring(char *user_input, int xors);
+    void pattern(const char *user_input, const int value);
+    void sub(const char *user_input, const int value);
+    void shift(const char *user_input, const int shift);
+    void xoring(const char *user_input, const int xors);
 };
 
 #endif  // CODE___REHELP_HEADERS_PICKTHREE_H_
