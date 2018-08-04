@@ -9,14 +9,14 @@
 #include <openssl/md5.h>
 #include <openssl/sha.h>
 
-#include <../headers/defaults.h>
-#include <../headers/picktwo.h>
+#include <defaults.h>
+#include <picktwo.h>
 
 pickTwo::pickTwo() {}
 
 // Private methods
 
-int pickTwo::length_decode(char *user_input) {
+int pickTwo::length_decode(const char *user_input) {
     int equals;
     const int length = strnlen(user_input, defaults::max);
 
@@ -30,7 +30,7 @@ int pickTwo::length_decode(char *user_input) {
     return (length * 3) / 4 - equals;
 }
 
-void pickTwo::print_file(char *proc) {
+void pickTwo::print_file(const char *proc) {
     constexpr int size = 6400;
     char *filecontent = new char[size];
     FILE *file = fopen(proc, "r");
@@ -54,7 +54,7 @@ void pickTwo::print_file(char *proc) {
 
 // Public methods
 
-void pickTwo::reverse(char *user_input) {
+void pickTwo::reverse(const char *user_input) {
     const int length = strnlen(user_input, defaults::max) - 1;
     char *output = new char[defaults::max];
 
@@ -65,7 +65,7 @@ void pickTwo::reverse(char *user_input) {
     delete[] output;
 }
 
-void pickTwo::magic(char *user_input) {
+void pickTwo::magic(const char *user_input) {
     FILE *file = fopen(user_input, "rb");
     char *filecontent = new char[sizeof(file)];
 
@@ -99,37 +99,37 @@ void pickTwo::magic(char *user_input) {
     delete[] filecontent;
 }
 
-void pickTwo::dump_stack(char *user_input) {
+void pickTwo::dump_stack(const char *user_input) {
     strncat(proc, user_input, defaults::max - strnlen(proc, defaults::max));
     strncat(proc, "/stack", defaults::max - strnlen(proc, defaults::max));
     print_file(proc);
 }
 
-void pickTwo::dump_status(char *user_input) {
+void pickTwo::dump_status(const char *user_input) {
     strncat(proc, user_input, defaults::max - strnlen(proc, defaults::max));
     strncat(proc, "/status", defaults::max - strnlen(proc, defaults::max));
     print_file(proc);
 }
 
-void pickTwo::dump_io(char *user_input) {
+void pickTwo::dump_io(const char *user_input) {
     strncat(proc, user_input, defaults::max - strnlen(proc, defaults::max));
     strncat(proc, "/io", defaults::max - strnlen(proc, defaults::max));
     print_file(proc);
 }
 
-void pickTwo::dump_maps(char *user_input) {
+void pickTwo::dump_maps(const char *user_input) {
     strncat(proc, user_input, defaults::max - strnlen(proc, defaults::max));
     strncat(proc, "/maps", defaults::max - strnlen(proc, defaults::max));
     print_file(proc);
 }
 
-void pickTwo::dump_limits(char *user_input) {
+void pickTwo::dump_limits(const char *user_input) {
     strncat(proc, user_input, defaults::max - strnlen(proc, defaults::max));
     strncat(proc, "/limits", defaults::max - strnlen(proc, defaults::max));
     print_file(proc);
 }
 
-void pickTwo::dump_clone(char *user_input) {
+void pickTwo::dump_clone(const char *user_input) {
     int outfile;
     char *filecontent;
     FILE *file = fopen(proc, "r");
@@ -165,7 +165,7 @@ void pickTwo::dump_clone(char *user_input) {
     puts("Created file named cloned");
 }
 
-void pickTwo::add(char *user_input) {
+void pickTwo::add(const char *user_input) {
     int total = 0;
     const int length = strnlen(user_input, defaults::max) - 1;
 
@@ -178,7 +178,7 @@ void pickTwo::add(char *user_input) {
     puts("");
 }
 
-void pickTwo::mult(char *user_input) {
+void pickTwo::mult(const char *user_input) {
     int total = 1;
     const int length = strnlen(user_input, defaults::max) - 1;
 
@@ -191,7 +191,7 @@ void pickTwo::mult(char *user_input) {
     puts("");
 }
 
-void pickTwo::xors(char *user_input) {
+void pickTwo::xors(const char *user_input) {
     int xors;
     const int length = strnlen(user_input, defaults::max);
     char *xored = new char[length];
@@ -215,7 +215,7 @@ void pickTwo::xors(char *user_input) {
     delete[] xored;
 }
 
-void pickTwo::base64encode(char *user_input) {
+void pickTwo::base64encode(const char *user_input) {
     BIO *base64 = BIO_new(BIO_f_base64());
     BIO *input = BIO_new_fp(stdout, BIO_NOCLOSE);
 
@@ -225,7 +225,7 @@ void pickTwo::base64encode(char *user_input) {
     BIO_free_all(base64);
 }
 
-void pickTwo::base64decode(char *user_input) {
+void pickTwo::base64decode(const char *user_input) {
     int length;
     const int decode_length = length_decode(user_input);
     char *output = new char[decode_length + 1];
@@ -248,7 +248,7 @@ void pickTwo::base64decode(char *user_input) {
     delete[] output;
 }
 
-void pickTwo::getmd5(char *user_input) {
+void pickTwo::getmd5(const char *user_input) {
     const int length = strnlen(user_input, defaults::max);
     unsigned char hash[MD5_DIGEST_LENGTH];
     MD5_CTX ctx;
@@ -263,7 +263,7 @@ void pickTwo::getmd5(char *user_input) {
 
     puts("");
 }
-void pickTwo::getsha1(char *user_input) {
+void pickTwo::getsha1(const char *user_input) {
     const int length = strnlen(user_input, defaults::max);
     unsigned char hash[SHA_DIGEST_LENGTH];
     SHA_CTX ctx;
@@ -279,7 +279,7 @@ void pickTwo::getsha1(char *user_input) {
     puts("");;
 }
 
-void pickTwo::getsha256(char *user_input) {
+void pickTwo::getsha256(const char *user_input) {
     const int length = strnlen(user_input, defaults::max);
     unsigned char hash[SHA256_DIGEST_LENGTH];
     SHA256_CTX ctx;
@@ -295,7 +295,7 @@ void pickTwo::getsha256(char *user_input) {
     puts("");
 }
 
-void pickTwo::getsha384(char *user_input) {
+void pickTwo::getsha384(const char *user_input) {
     const int length = strnlen(user_input, defaults::max);
     unsigned char hash[SHA384_DIGEST_LENGTH];
     SHA512_CTX ctx;
@@ -311,7 +311,7 @@ void pickTwo::getsha384(char *user_input) {
     puts("");
 }
 
-void pickTwo::getsha512(char *user_input) {
+void pickTwo::getsha512(const char *user_input) {
     const int length = strnlen(user_input, defaults::max);
     unsigned char hash[SHA512_DIGEST_LENGTH];
     SHA512_CTX ctx;

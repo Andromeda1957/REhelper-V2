@@ -4,100 +4,101 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <../headers/defaults.h>
-#include <../headers/pickone.h>
-#include <../headers/picktwo.h>
-#include <../headers/pickthree.h>
-#include <../headers/options.h>
+#include <defaults.h>
+#include <pickone.h>
+#include <picktwo.h>
+#include <pickthree.h>
+#include <options.h>
 
 REhelp::REhelp() {}
 
 // Public methods
 
-void REhelp::pick1(char *option) {
+void REhelp::pick1(const char *option) {
+    pickOne pick;
+
     if (strncmp(option, "--ascii", max) == 0) {
-        ascii_table();
+        pick.ascii_table();
     } else if (strncmp(option, "--aslr", max) == 0) {
-        aslr();
+        pick.aslr();
     } else if (strncmp(option, "--no-aslr", max) == 0) {
-        no_aslr();
+        pick.no_aslr();
     } else if (strncmp(option, "--no-time", max) == 0) {
-        no_time();
+        pick.no_time();
     } else if (strncmp(option, "--version", max) == 0) {
-        version();
+        pick.version();
     } else if (strncmp(option, "--ptrace", max) == 0) {
-        trace();
+        pick.trace();
     } else if (strncmp(option, "--break", max) == 0) {
-        breakpoint();
+        pick.breakpoint();
     } else if (strncmp(option, "--back", max) == 0) {
-        background();
+        pick.background();
     } else if (strncmp(option, "--crash", max) == 0) {
-        crash();
+        pick.crash();
     } else {
         usage();
     }
-
-    exit(0);
 }
 
-void REhelp::pick2(char *option, char *input) {
+void REhelp::pick2(const char *option, const char *input) {
+    pickTwo pick;
+
     if (strncmp(option, "--reverse", max) == 0) {
-        reverse(input);
+        pick.reverse(input);
     } else if (strncmp(option, "--magic", max) == 0) {
-        magic(input);
+        pick.magic(input);
     } else if (strncmp(option, "--stack", max) == 0) {
-        dump_stack(input);
+        pick.dump_stack(input);
     } else if (strncmp(option, "--status", max) == 0) {
-        dump_status(input);
+        pick.dump_status(input);
     } else if (strncmp(option, "--io", max) == 0) {
-        dump_io(input);
+        pick.dump_io(input);
     } else if (strncmp(option, "--maps", max) == 0) {
-        dump_maps(input);
+        pick.dump_maps(input);
     } else if (strncmp(option, "--limits", max) == 0) {
-        dump_limits(input);
+        pick.dump_limits(input);
     } else if (strncmp(option, "--clone", max) == 0) {
-        dump_clone(input);
+        pick.dump_clone(input);
     } else if (strncmp(option, "--add", max) == 0) {
-        add(input);
+        pick.add(input);
     } else if (strncmp(option, "--mult", max) == 0) {
-        mult(input);
+        pick.mult(input);
     } else if (strncmp(option, "--xors", max) == 0) {
-        xors(input);
+        pick.xors(input);
     } else if (strncmp(option, "--base64e", max) == 0) {
-        base64encode(input);
+        pick.base64encode(input);
     } else if (strncmp(option, "--base64d", max) == 0) {
-        base64decode(input);
+        pick.base64decode(input);
     } else if (strncmp(option, "--md5", max) == 0) {
-        getmd5(input);
+        pick.getmd5(input);
     } else if (strncmp(option, "--sha1", max) == 0) {
-        getsha1(input);
+        pick.getsha1(input);
     } else if (strncmp(option, "--sha256", max) == 0) {
-        getsha256(input);
+        pick.getsha256(input);
     } else if (strncmp(option, "--sha384", max) == 0) {
-        getsha384(input);
+        pick.getsha384(input);
     } else if (strncmp(option, "--sha512", max) == 0) {
-        getsha512(input);
+        pick.getsha512(input);
     } else {
         usage();
     }
-
-    exit(0);
 }
 
-void REhelp::pick3(char *option, char *input, char *value_str) {
-    int value = atoi(value_str);
+void REhelp::pick3(const char *option, const char *input,
+const char *value_str) {
+    const int value = atoi(value_str);
+
+    pickThree pick;
 
     if (strncmp(option, "--pattern", max) == 0) {
-        pattern(input, value);
+        pick.pattern(input, value);
     } else if (strncmp(option, "--sub", max) == 0) {
-        sub(input, value);
+        pick.sub(input, value);
     } else if (strncmp(option, "--shift", max) == 0) {
-        shift(input, value);
+        pick.shift(input, value);
     } else if (strncmp(option, "--xor", max) == 0) {
-        xoring(input, value);
+        pick.xoring(input, value);
     } else {
         usage();
     }
-
-    exit(0);
 }

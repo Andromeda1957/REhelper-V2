@@ -7,8 +7,8 @@
 #include <sys/ptrace.h>
 #include <sys/utsname.h>
 
-#include <../headers/defaults.h>
-#include <../headers/pickone.h>
+#include <defaults.h>
+#include <pickone.h>
 
 #include <vector>
 
@@ -24,12 +24,8 @@ void pickOne::sig_handler(int signo) {
 // Private static methods
 
 void pickOne::detect() {
-    if (ptrace(PTRACE_TRACEME, 0, NULL, NULL) == -1) {
+    if (ptrace(PTRACE_TRACEME, 0, NULL, NULL) == -1)
         puts("Debugger detected!");
-        exit(0);
-    } else {
-        exit(0);
-    }
 }
 
 // Public static methods

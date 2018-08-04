@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <../headers/defaults.h>
+#include <defaults.h>
 
 defaults::defaults() {}
 
-// Public methods
+// Public static methods
 
 void defaults::usage() {
     puts("REhelper created by Andromeda");
@@ -65,6 +65,5 @@ void defaults::usage() {
     puts("--back                          "
         "continue execution in background");
     puts("--crash                         cause segmentation fault\n");
-    exit(0);
 }
 
