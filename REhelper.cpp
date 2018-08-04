@@ -1,6 +1,10 @@
 // Copyright 2018 <Andromeda>
-#include <../headers/options.h>
 
+#include <defaults.h>
+#include <pickone.h>
+#include <picktwo.h>
+#include <pickthree.h>
+#include <options.h>
 
 int main(int argc, char **argv) {
     REhelp options;
@@ -8,13 +12,16 @@ int main(int argc, char **argv) {
     switch (argc) {
         case 2:
             options.pick1(argv[1]);
+            return 0;
         case 3:
             options.pick2(argv[1], argv[2]);
+            return 0;
         case 4:
             options.pick3(argv[1], argv[2], argv[3]);
+            return 0;
         default:
             options.usage();
         }
 
-    return 0;
+    return 1;
 }
